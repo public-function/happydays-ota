@@ -8,6 +8,10 @@ class HotelRoomTypeInventory extends Model
 {
     protected $table = 'hotel_room_type_inventories';
 
+    // Composite primary key (no auto-increment)
+    protected $primaryKey = ['hotel_room_type_id', 'night_date'];
+    public $incrementing = false;
+
     protected $fillable = [
         'hotel_room_type_id',
         'night_date',
