@@ -4,18 +4,11 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\HotelRoomType;
-use App\Models\HotelRoomTypeInventory;
+use App\Models\Inventory;
 use Illuminate\Support\Carbon;
-use Faker\Factory as Faker;
 
 class InventorySeeder extends Seeder
 {
-    private $faker;
-
-    public function __construct()
-    {
-        $this->faker = Faker::create('da_DK');
-    }
     /**
      * Run the database seeders.
      */
@@ -40,15 +33,15 @@ class InventorySeeder extends Seeder
                     default => 10,
                 };
 
-                $availableUnits = $baseUnits + $this->faker->numberBetween(-3, 5);
+                $availableUnits = $baseUnits + $this->faker()->numberBetween(-3, 5);
                 $availableUnits = max(1, $availableUnits); // Ensure at least 1
 
-                $heldUnits = $this->faker->numberBetween(0, min(3, $availableUnits));
+                $heldUnits = $this->faker()->numberBetween(0, min(3, $availableUnits));
 
                 // 10% chance of stop sell
-                $stopSell = $this->faker->boolean(10);
+                $stopSell = $this->faker()->boolean(10);
 
-                HotelRoomTypeInventory::updateOrCreate(
+                Inventory::updateOrCreate(
                     [
                         'hotel_room_type_id' => $roomType->id,
                         'night_date' => $nightDate,
@@ -67,5 +60,10 @@ class InventorySeeder extends Seeder
         $progressBar->finish();
         $this->command->line('');
         $this->command->info('Inventory seeded successfully.');
+    }
+
+    private function faker()
+    {
+        return \Illuminate\Support\Faker\Factory::create();
     }
 }
