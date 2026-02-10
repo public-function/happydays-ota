@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\HotelRoomType;
-use App\Models\Inventory;
+use App\Models\HotelRoomTypeInventory;
 use Illuminate\Support\Carbon;
 use Faker\Factory as Faker;
 
@@ -24,7 +24,7 @@ class InventorySeeder extends Seeder
 
         foreach ($hotelRoomTypes as $roomType) {
             for ($i = 0; $i < $daysToSeed; $i++) {
-                $nightDate = $startDate->copy()->addDays($i)->toDateString();
+                $nightDate = $startDate->copy()->addDays($i)->format('Y-m-d');
 
                 // Calculate available units based on room type and random variation
                 $baseUnits = match ($roomType->max_occupancy) {
@@ -43,7 +43,7 @@ class InventorySeeder extends Seeder
                 // 10% chance of stop sell
                 $stopSell = $faker->boolean(10);
 
-                Inventory::updateOrCreate(
+                HotelRoomTypeInventory::updateOrCreate(
                     [
                         'hotel_room_type_id' => $roomType->id,
                         'night_date' => $nightDate,
