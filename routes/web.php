@@ -17,9 +17,11 @@ Route::view('/admin/dashboard', 'livewire.layouts.app-layout')->name('admin.dash
 Route::get('/admin/hotels', HotelsIndex::class)->name('admin.hotels');
 Route::get('/admin/hotels/create', HotelsCreate::class)->name('admin.hotels.create');
 Route::get('/admin/hotels/{id}/edit', HotelsEdit::class)->name('admin.hotels.edit');
+Route::get('/admin/hotels/{id}/room-types', fn() => view('livewire.layouts.app-layout'))->name('admin.hotels.room-types');
+Route::get('/admin/hotels/{id}/offers', fn() => view('livewire.layouts.app-layout'))->name('admin.hotels.offers');
 
-// Admin Room Types
-Route::get('/admin/room-types', RoomTypesIndex::class)->name('admin.room-types');
+// Admin Room Types (use HotelsIndex as temporary index)
+Route::get('/admin/room-types', HotelsIndex::class)->name('admin.room-types');
 
 // Placeholder routes for features that need components
 Route::view('/admin/inventory', 'livewire.layouts.app-layout')->name('admin.inventory');
