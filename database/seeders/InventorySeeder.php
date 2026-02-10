@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\HotelRoomType;
-use App\Models\HotelRoomTypeInventory;
 use Illuminate\Support\Carbon;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\DB;
 
 class InventorySeeder extends Seeder
 {
@@ -43,7 +43,8 @@ class InventorySeeder extends Seeder
                 // 10% chance of stop sell
                 $stopSell = $faker->boolean(10);
 
-                HotelRoomTypeInventory::updateOrCreate(
+                // Use upsert for composite key table
+                DB::table('hotel_room_type_inventories')->updateOrInsert(
                     [
                         'hotel_room_type_id' => $roomType->id,
                         'night_date' => $nightDate,
@@ -52,6 +53,8 @@ class InventorySeeder extends Seeder
                         'available_units' => $availableUnits,
                         'held_units' => $heldUnits,
                         'stop_sell' => $stopSell,
+                        'created_at' => now(),
+                        'updated_at' => now(),
                     ]
                 );
 
