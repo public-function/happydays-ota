@@ -1,12 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Home\Admins\Hotels\Index as HotelsIndex;
+use App\Livewire\Home\Admins\Hotels\Create as HotelsCreate;
+use App\Livewire\Home\Admins\Hotels\Edit as HotelsEdit;
+use App\Livewire\Home\Admins\RoomTypes\Index as RoomTypesIndex;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('admin.hotels');
 });
 
-Route::view('/admin/hotels', 'admin.hotels')->name('admin.hotels');
-Route::view('/admin/hotels/create', 'admin.hotels.create')->name('admin.hotels.create');
-Route::view('/admin/hotels/{id}/edit', 'admin.hotels.edit')->name('admin.hotels.edit');
-Route::view('/admin/room-types', 'admin.room-types')->name('admin.room-types');
+// Admin Hotels
+Route::get('/admin/hotels', HotelsIndex::class)->name('admin.hotels');
+Route::get('/admin/hotels/create', HotelsCreate::class)->name('admin.hotels.create');
+Route::get('/admin/hotels/{id}/edit', HotelsEdit::class)->name('admin.hotels.edit');
+
+// Admin Room Types
+Route::get('/admin/room-types', RoomTypesIndex::class)->name('admin.room-types');

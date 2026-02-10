@@ -60,11 +60,11 @@ class Create extends Component
 
         $this->dispatch('notify', message: 'Hotel created successfully.', type: 'success');
         
-        return redirect()->route('admin.hotels.index');
+        return redirect()->route('admin.hotels');
     }
 
     public function cancel()
     {
-        return redirect()->route('admin.hotels.index');
+        return redirect()->route('admin.hotels');
     }
 }
