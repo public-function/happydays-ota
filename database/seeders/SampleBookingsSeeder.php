@@ -49,10 +49,10 @@ class SampleBookingsSeeder extends Seeder
 
             // Create the booking
             $booking = Booking::create([
-                'booking_reference' => $reference,
+                'reference' => $reference,
                 'customer_name' => $customerName,
                 'customer_email' => $customerEmail,
-                'customer_phone' => $faker->phoneNumber ?? $faker->e164PhoneNumber,
+                'customer_phone' => $faker->e164PhoneNumber,
                 'status' => $status,
                 'total_amount' => 0,
                 'paid_amount' => 0,
@@ -100,9 +100,11 @@ class SampleBookingsSeeder extends Seeder
                     'unit_price' => $unitPrice,
                     'total_price' => $totalPrice,
                     'status' => $itemStatus,
-                    'hotel_name_snapshot' => 'Hotel', // Placeholder
-                    'offer_name_snapshot' => $productOffer->name,
-                    'rate_plan_name_snapshot' => 'Standard',
+                    'snapshot' => json_encode([
+                        'hotel_name' => 'Hotel', // Placeholder
+                        'offer_name' => $productOffer->name,
+                        'rate_plan_name' => 'Standard',
+                    ]),
                 ]);
 
                 $bookingTotal += $totalPrice;

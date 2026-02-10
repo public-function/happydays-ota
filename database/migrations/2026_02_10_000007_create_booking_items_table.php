@@ -16,6 +16,8 @@ return new class extends Migration
             $table->date('check_in_date');
             $table->integer('nights')->default(1);
             $table->integer('quantity')->default(1);
+            $table->integer('adults')->default(2);
+            $table->integer('children')->default(0);
             $table->decimal('unit_price', 10, 2);
             $table->decimal('total_price', 10, 2);
             $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
