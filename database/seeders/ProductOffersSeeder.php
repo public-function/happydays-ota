@@ -8,6 +8,8 @@ use App\Models\RatePlan;
 use App\Models\ProductOffer;
 use App\Models\HotelRoomType;
 
+use Faker\Factory as Faker;
+
 class ProductOffersSeeder extends Seeder
 {
     /**
@@ -17,6 +19,7 @@ class ProductOffersSeeder extends Seeder
     {
         $hotels = Hotel::all();
         $ratePlans = RatePlan::where('status', 'active')->get();
+        $faker = Faker::create('da_DK');
 
         $offerTemplates = [
             [
@@ -90,7 +93,7 @@ class ProductOffersSeeder extends Seeder
                             [
                                 'duration_nights' => $template['duration'],
                                 'min_guests' => 1,
-                                'max_guests' => $this->faker()->numberBetween(2, 4),
+                                'max_guests' => $faker->numberBetween(2, 4),
                                 'base_price' => $basePrice,
                                 'status' => 'active',
                             ]
@@ -101,10 +104,5 @@ class ProductOffersSeeder extends Seeder
         }
 
         $this->command->info('Product offers seeded successfully.');
-    }
-
-    private function faker()
-    {
-        return \Illuminate\Support\Faker\Factory::create();
     }
 }
