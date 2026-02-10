@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\HotelRoomType;
 use App\Models\Inventory;
 use Illuminate\Support\Carbon;
+use Faker\Factory as Faker;
 
 class InventorySeeder extends Seeder
 {
@@ -17,6 +18,7 @@ class InventorySeeder extends Seeder
         $hotelRoomTypes = HotelRoomType::where('status', 'active')->get();
         $daysToSeed = 90;
         $startDate = Carbon::now();
+        $faker = Faker::create('da_DK');
 
         $progressBar = $this->command->getOutput()->createProgressBar($hotelRoomTypes->count() * $daysToSeed);
 
@@ -33,13 +35,13 @@ class InventorySeeder extends Seeder
                     default => 10,
                 };
 
-                $availableUnits = $baseUnits + $this->faker()->numberBetween(-3, 5);
+                $availableUnits = $baseUnits + $faker->numberBetween(-3, 5);
                 $availableUnits = max(1, $availableUnits); // Ensure at least 1
 
-                $heldUnits = $this->faker()->numberBetween(0, min(3, $availableUnits));
+                $heldUnits = $faker->numberBetween(0, min(3, $availableUnits));
 
                 // 10% chance of stop sell
-                $stopSell = $this->faker()->boolean(10);
+                $stopSell = $faker->boolean(10);
 
                 Inventory::updateOrCreate(
                     [
@@ -60,10 +62,5 @@ class InventorySeeder extends Seeder
         $progressBar->finish();
         $this->command->line('');
         $this->command->info('Inventory seeded successfully.');
-    }
-
-    private function faker()
-    {
-        return \Illuminate\Support\Faker\Factory::create();
     }
 }
